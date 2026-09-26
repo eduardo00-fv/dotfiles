@@ -1,0 +1,209 @@
+;; Widgets de escritorio — paleta Tinta (ver eww.scss)
+;; Una sola columna arriba a la izquierda de la laptop:
+;;   reloj + accesos · clima · notificaciones · pomodoro · sistema + paquetes
+;; Se abre al iniciar Hyprland (ver hyprland.lua): eww daemon y eww open escritorio
+
+;; ---------- Datos ----------
+
+(defpoll hora :interval "5s" "date +%H:%M")
+(defpoll fecha :interval "60s"
+               :initial '{"fecha":"","saludo":""}'
+  "~/.config/eww/scripts/fecha.py")
+
+(defpoll clima :interval "15m"
+               :initial '{"ok":false,"city":"","temp":"--","feels":"--","desc":"Cargando…","icon":"","max":"--","min":"--","hum":"--"}'
+  "~/.config/eww/scripts/weather.py")
+
+(deflisten notis :initial '{"items":[],"total":0}'
+  "~/.config/eww/scripts/notis.py")
+(deflisten swaync :initial '{"count":0,"dnd":false}'
+  "swaync-client -s")
+
+(defpoll pomo :interval "1s"
+              :initial '{"estado":"stopped","fase":"work","etiqueta":"Trabajo","sesion":1,"tiempo":"25:00","progreso":0}'
+  "~/.config/eww/scripts/pomodoro.sh")
+
+;; Disco con df en vez de EWW_DISK: EWW_DISK hace statfs de TODOS los montajes,
+;; incluido el automount CIFS /mnt/ebackup, y se queda colgado sin red
+;; (eso trababa el arranque de eww y abortaba la suspensión)
+(defpoll disco :interval "60s"
+               :initial '{"perc":0,"libre":0}'
+  "~/.config/eww/scripts/disco.sh")
+
+(deflisten musica :initial '{"activo":false,"estado":"Stopped","titulo":"","artista":"","album":"","arte":""}'
+  "~/.config/eww/scripts/musica.py")
+(defpoll musica-pos :interval "1s" :run-while {musica.activo} :initial "0"
+  "~/.config/eww/scripts/musica-pos.sh")
+
+(defpoll paquetes :interval "1h"
+                  :initial '{"repo":0,"aur":0,"total":0,"ultimo":"…"}'
+  "~/.config/eww/scripts/updates.sh")
+
+;; ---------- Reloj + accesos rápidos ----------
+
+(defwidget acceso [icono cmd nombre]
+  (button :class "acceso" :tooltip nombre :onclick "${cmd} &" icono))
+
+(defwidget reloj-card []
+  (box :class "card reloj" :orientation "v" :space-evenly false :spacing 4
+    (label :class "reloj-hora" :xalign 0 :text hora)
+    (label :class "reloj-fecha" :xalign 0 :text {fecha.fecha})
+    (label :class "reloj-saludo" :xalign 0 :text {fecha.saludo})
+    (box :class "accesos" :orientation "h" :space-evenly false :spacing 6
+      (acceso :icono "󰖟" :nombre "Brave" :cmd "brave")
+      (acceso :icono "󰨞" :nombre "VS Code" :cmd "code")
+      (acceso :icono "󰏫" :nombre "Xournal++" :cmd "xournalpp")
+      (acceso :icono "󰘚" :nombre "Arduino IDE" :cmd "arduino-ide")
+      (acceso :icono "󰆍" :nombre "Terminal" :cmd "kitty")
+      (acceso :icono "󰠆" :nombre "Modelo NBA (VS Code)" :cmd "code ~/Documents/Modelo_ML_V2")
+      ;; lo que la waybar no muestra: actualizaciones y disco
+      (box :hexpand true :halign "end" :valign "center" :space-evenly false :spacing 12
+        (label :class "estado ${paquetes.total > 0 ? 'pendientes' : ''}"
+               :tooltip {paquetes.total == 0 ? "Sistema al día · último -Syu ${paquetes.ultimo}" : "${paquetes.total} actualizaciones · pacman ${paquetes.repo} · AUR ${paquetes.aur} · último -Syu ${paquetes.ultimo}"}
+               :text "󰚰 ${paquetes.total}")
+        (label :class "estado" :tooltip "Espacio libre en /" :text "󰋊 ${disco.libre}G")))))
+
+;; ---------- Música (Apple Music web en Brave, o lo que esté sonando) ----------
+
+(defwidget musica-card []
+  (box :class "card musica ${musica.estado}" :orientation "v" :space-evenly false :spacing 12
+    (box :orientation "h" :space-evenly false :spacing 16
+      (box :class "musica-arte ${musica.arte == '' ? 'sin-arte' : ''}"
+           :style {musica.arte != "" ? "background-image: url('${musica.arte}');" : ""}
+           :width 64 :height 64
+        (label :class "musica-nota" :visible {musica.arte == ""} :text "󰝚"))
+      (box :orientation "v" :space-evenly false :hexpand true :valign "center" :spacing 2
+        (label :class "card-titulo" :xalign 0 :text "MÚSICA")
+        (label :class "musica-titulo" :xalign 0 :limit-width 26
+               :text {musica.activo ? musica.titulo : "Nada sonando"})
+        (label :class "musica-artista" :xalign 0 :limit-width 32
+               :text {musica.activo ? (musica.album != "" ? "${musica.artista} · ${musica.album}" : musica.artista) : "Abre Apple Music para empezar"}))
+      (box :orientation "h" :space-evenly false :spacing 6 :valign "center"
+        (button :class "icono-btn grande" :visible {!musica.activo} :tooltip "Abrir Apple Music"
+                :onclick "brave --app=https://music.apple.com >/dev/null 2>&1 &" "󰐊")
+        (box :orientation "h" :space-evenly false :spacing 6 :visible {musica.activo}
+          (button :class "icono-btn" :tooltip "Anterior" :onclick "playerctl -p playerctld previous" "󰒮")
+          (button :class "icono-btn grande" :tooltip {musica.estado == "Playing" ? "Pausar" : "Reproducir"}
+                  :onclick "playerctl -p playerctld play-pause"
+                  {musica.estado == "Playing" ? "󰏤" : "󰐊"})
+          (button :class "icono-btn" :tooltip "Siguiente" :onclick "playerctl -p playerctld next" "󰒭"))))
+    (progress :class "barra musica-barra" :visible {musica.activo} :value musica-pos)))
+
+;; ---------- Clima ----------
+
+(defwidget clima-card []
+  (box :class "card clima" :orientation "h" :space-evenly false :spacing 18
+    (label :class "clima-icono" :text {clima.icon})
+    (box :orientation "v" :space-evenly false :valign "center" :spacing 2
+      (box :orientation "h" :space-evenly false :spacing 12
+        (label :class "clima-temp" :text "${clima.temp}°")
+        (label :class "clima-ciudad" :valign "end" :xalign 0 :text {clima.city}))
+      (label :class "clima-desc" :xalign 0 :limit-width 28 :text {clima.desc})
+      (label :class "clima-extra" :xalign 0
+             :text "máx ${clima.max}°  ·  mín ${clima.min}°  ·  humedad ${clima.hum}%"))))
+
+;; ---------- Notificaciones ----------
+
+(defwidget noti [n]
+  (box :class "noti" :orientation "v" :space-evenly false :spacing 1
+    (box :orientation "h" :space-evenly false
+      (label :class "noti-app" :xalign 0 :hexpand true :limit-width 24 :text {n.app})
+      (label :class "noti-hace" :xalign 1 :text {n.hace}))
+    (label :class "noti-titulo" :xalign 0 :limit-width 42 :text {n.titulo})
+    (label :class "noti-cuerpo" :xalign 0 :limit-width 48
+           :visible {n.cuerpo != ""} :text {n.cuerpo})))
+
+(defwidget notis-card []
+  (box :class "card notis" :orientation "v" :space-evenly false :spacing 10
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "card-titulo" :xalign 0 :hexpand true :text "NOTIFICACIONES")
+      (button :class "icono-btn ${swaync.dnd ? 'activo' : ''}"
+              :tooltip {swaync.dnd ? "No molestar: activado" : "No molestar: desactivado"}
+              :onclick "swaync-client -d"
+              {swaync.dnd ? "󰂛" : "󰂚"})
+      (button :class "icono-btn" :tooltip "Limpiar"
+              :onclick "swaync-client -C; kill -USR1 $(cat $XDG_RUNTIME_DIR/eww-notis.pid)"
+              "󰎟")
+      (button :class "icono-btn" :tooltip "Abrir panel (${swaync.count} en el historial)"
+              :onclick "swaync-client -t"
+              "󰍜"))
+    (box :orientation "v" :space-evenly false :spacing 10
+      (for n in {notis.items}
+        (noti :n n))
+      (label :class "vacio" :xalign 0 :visible {arraylength(notis.items) == 0}
+             :text "Sin notificaciones nuevas"))))
+
+;; ---------- Pomodoro ----------
+
+(defwidget pomo-card []
+  (box :class "card pomo ${pomo.fase} ${pomo.estado}" :orientation "v" :space-evenly false :spacing 10
+    (box :orientation "h" :space-evenly false :spacing 16
+      (box :orientation "v" :space-evenly false :hexpand true
+        (label :class "card-titulo" :xalign 0 :text "POMODORO")
+        (label :class "pomo-tiempo" :xalign 0 :text {pomo.tiempo})
+        (label :class "pomo-fase" :xalign 0
+               :text "${pomo.etiqueta} · sesión ${pomo.sesion}${pomo.estado == 'paused' ? ' · en pausa' : ''}"))
+      (box :orientation "h" :space-evenly false :spacing 6 :valign "center"
+        (button :class "icono-btn grande" :tooltip {pomo.estado == "running" ? "Pausar" : "Iniciar"}
+                :onclick "~/.local/bin/pomodoro toggle"
+                {pomo.estado == "running" ? "󰏤" : "󰐊"})
+        (button :class "icono-btn grande" :tooltip "Saltar fase"
+                :onclick "~/.local/bin/pomodoro skip" "󰒭")
+        (button :class "icono-btn grande" :tooltip "Reiniciar"
+                :onclick "~/.local/bin/pomodoro reset" "󰑐")))
+    (progress :class "barra pomo-barra" :value {pomo.progreso})))
+
+;; ---------- To-do ----------
+;; Tareas en ~/.local/share/todo/todo.txt (todo.sh). Agregar: botón + o Super+T.
+
+(defpoll todo :interval "60s"
+              :initial '{"items":[],"pendientes":0,"hechas":0,"extra":0}'
+  "~/.config/eww/scripts/todo.sh json")
+
+(defwidget tarea [t]
+  (button :class "tarea ${t.hecha ? 'hecha' : ''}"
+          :tooltip {t.hecha ? "Desmarcar" : "Marcar como hecha"}
+          :onclick "~/.config/eww/scripts/todo.sh toggle ${t.n}"
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "tarea-check" :text {t.hecha ? "󰄵" : "󰄱"})
+      (label :class "tarea-texto" :xalign 0 :hexpand true :limit-width 40 :text {t.texto}))))
+
+(defwidget todo-card []
+  (box :class "card todo" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "card-titulo" :xalign 0 :hexpand true
+             :text {todo.pendientes > 0 ? "PENDIENTES · ${todo.pendientes}" : "PENDIENTES"})
+      (button :class "icono-btn" :tooltip "Nueva tarea (Super+T)"
+              :onclick "~/.config/eww/scripts/todo.sh add &" "󰐕")
+      (button :class "icono-btn" :visible {todo.hechas > 0} :tooltip "Borrar las hechas"
+              :onclick "~/.config/eww/scripts/todo.sh clean" "󰃢")
+      (button :class "icono-btn" :tooltip "Editar la lista"
+              :onclick "~/.config/eww/scripts/todo.sh edit &" "󰏫"))
+    (box :orientation "v" :space-evenly false :spacing 2
+      ;; el for va en su propia caja: si no, eww lo pone después de las etiquetas
+      (box :orientation "v" :space-evenly false :spacing 2
+        (for t in {todo.items}
+          (tarea :t t)))
+      (label :class "vacio" :xalign 0 :visible {arraylength(todo.items) == 0}
+             :text "Nada pendiente 󰄬")
+      (label :class "vacio" :xalign 0 :visible {todo.extra > 0}
+             :text "+${todo.extra} más…"))))
+
+;; ---------- Ventana (capa de fondo, solo en la laptop) ----------
+
+(defwidget columna []
+  (box :orientation "v" :space-evenly false :spacing 12
+    (reloj-card)
+    (musica-card)
+    (clima-card)
+    (notis-card)
+    (pomo-card)
+    (todo-card)))
+
+(defwindow escritorio
+  :monitor "0x21ED"   ; panel de la laptop (eww 0.5 usa el modelo, no el puerto)
+  :stacking "bottom"
+  :exclusive false
+  :focusable false
+  :geometry (geometry :x "28px" :y "20px" :width "440px" :anchor "top left")
+  (columna))

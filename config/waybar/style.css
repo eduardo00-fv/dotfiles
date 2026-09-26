@@ -1,0 +1,167 @@
+/* Waybar "islas" — paleta Tinta
+   tinta #1d1a16 · superficie #2a241d · terracota #e0551f · crema #ecdcc0
+   arena #bfae90 · nogal #5e5245 · ocre #d9a441 · oliva #8a9a5b · arcilla #b0695a
+   Los colores de cada ícono van en config.jsonc (<span color=…>). */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "CaskaydiaCove Nerd Font", "Liberation Mono", monospace;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #ecdcc0;
+}
+
+tooltip {
+    background: rgba(29, 26, 22, 0.95);
+    border: 1px solid rgba(94, 82, 69, 0.6);
+    border-radius: 8px;
+}
+tooltip label {
+    color: #ecdcc0;
+    font-size: 12px;
+}
+
+/* ---------- Las tres islas ---------- */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: rgba(29, 26, 22, 0.82);
+    border: 1px solid rgba(94, 82, 69, 0.45);
+    border-radius: 12px;
+    padding: 0 6px;
+}
+
+/* Si no hay ventana ni música, que la isla no quede con hueco */
+window#waybar.empty #window { padding: 0; margin: 0; }
+
+/* ---------- Workspaces: puntos, el activo se estira ---------- */
+#workspaces {
+    padding: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 4px;
+    margin: 7px 3px;
+    min-width: 10px;
+    border-radius: 8px;
+    color: #5e5245;
+    background: transparent;
+    font-size: 10px;
+    transition: all 0.35s cubic-bezier(0.55, -0.35, 0.3, 1.4);
+}
+
+#workspaces button:hover {
+    color: #e2cda8;
+    background: rgba(191, 174, 144, 0.12);
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#workspaces button.active {
+    min-width: 30px;
+    color: #1d1a16;
+    background: #e0551f;
+}
+
+#workspaces button.urgent {
+    color: #d9a441;
+    animation: pulso 0.8s ease-in-out infinite alternate;
+}
+
+#window {
+    color: #bfae90;
+    padding: 0 10px 0 6px;
+}
+
+/* ---------- Centro: música + reloj ---------- */
+#mpris {
+    color: #bfae90;
+    padding: 0 12px 0 8px;
+    border-right: 1px solid rgba(94, 82, 69, 0.45);
+    transition: color 0.3s ease;
+}
+#mpris.playing { color: #ecdcc0; }
+#mpris:hover   { color: #e2cda8; }
+
+#clock {
+    color: #ecdcc0;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+/* ---------- Derecha ---------- */
+#custom-pomodoro,
+#cpu,
+#memory,
+#pulseaudio,
+#bluetooth,
+#battery,
+#network,
+#idle_inhibitor,
+#tray,
+#custom-power {
+    padding: 0 9px;
+    border-radius: 8px;
+    margin: 4px 0;
+    transition: background 0.25s ease;
+}
+
+#pulseaudio:hover,
+#bluetooth:hover,
+#network:hover,
+#idle_inhibitor:hover,
+#custom-pomodoro:hover,
+#custom-power:hover,
+#mpris:hover,
+#clock:hover {
+    background: rgba(224, 85, 31, 0.12);
+}
+
+#pulseaudio.muted { color: #5e5245; }
+
+#bluetooth.connected { color: #ecdcc0; }
+
+#battery.warning:not(.charging) { color: #d9a441; }
+
+#battery.critical:not(.charging) {
+    color: #b83a2e;
+    animation: pulso 0.6s linear infinite alternate;
+}
+
+/* Cargando: el texto "respira" suave */
+#battery.charging {
+    animation: respira 2.4s ease-in-out infinite alternate;
+}
+
+#network.disconnected { color: #b83a2e; }
+
+#idle_inhibitor { color: #5e5245; font-size: 14px; }
+#idle_inhibitor.activated { color: #d9a441; }
+
+#custom-power {
+    color: #e0551f;
+    font-size: 14px;
+    margin-right: 2px;
+}
+
+#custom-pomodoro { color: #5e5245; }
+#custom-pomodoro.work { color: #e0551f; }
+#custom-pomodoro.shortbreak,
+#custom-pomodoro.longbreak { color: #8a9a5b; }
+#custom-pomodoro.work-paused,
+#custom-pomodoro.shortbreak-paused,
+#custom-pomodoro.longbreak-paused { color: #5e5245; }
+
+@keyframes pulso {
+    to { color: #ecdcc0; }
+}
+
+@keyframes respira {
+    from { color: #ecdcc0; }
+    to   { color: #a6b577; }
+}

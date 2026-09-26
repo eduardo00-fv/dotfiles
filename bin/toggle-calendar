@@ -1,0 +1,39 @@
+#!/bin/bash
+if pgrep -x gsimplecal > /dev/null; then
+    pkill -x gsimplecal
+    exit 0
+fi
+
+gsimplecal &
+
+# Wait for window to appear
+for i in $(seq 1 20); do
+    sleep 0.05
+    ADDR=$(hyprctl clients -j | python3 -c "
+import sys, json
+clients = json.load(sys.stdin)
+for c in clients:
+    if c.get('class') == 'gsimplecal':
+        print(c['address'])
+        break
+" 2>/dev/null)
+    [ -n "$ADDR" ] && break
+done
+
+[ -z "$ADDR" ] && exit 1
+
+# Get focused monitor geometry
+read MON_X MON_W <<< $(hyprctl monitors -j | python3 -c "
+import sys, json
+monitors = json.load(sys.stdin)
+for m in monitors:
+    if m.get('focused'):
+        print(m['x'], m['width'])
+        break
+")
+
+WIN_W=258
+X=$(( MON_X + (MON_W - WIN_W) / 2 ))
+Y=40
+
+hyprctl dispatch movewindowpixel exact ${X} ${Y},address:${ADDR}

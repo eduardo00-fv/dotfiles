@@ -1,0 +1,131 @@
+// Waybar "islas" — paleta Tinta (ver style.css)
+// Tres grupos flotantes: workspaces+ventana · música+reloj · sistema
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "margin-top": 6,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 0,
+
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["mpris", "clock"],
+    "modules-right": ["custom/pomodoro", "cpu", "memory", "pulseaudio", "bluetooth", "battery", "network", "idle_inhibitor", "tray", "custom/power"],
+
+    // Puntos; el activo se estira a una píldora (animación en style.css)
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": { "active": "", "default": "", "urgent": "" },
+        "on-click": "activate",
+        "sort-by-number": true,
+        "tooltip": false
+    },
+
+    "hyprland/window": {
+        "max-length": 36,
+        "separate-outputs": true,
+        "format": "{}"
+    },
+
+    // Apple Music web (Brave) o lo que esté sonando; se oculta si no hay nada
+    "mpris": {
+        "format": "<span color='#e0551f'>󰎈</span>  {title}",
+        "format-paused": "<span color='#5e5245'>󰏤</span>  {title}",
+        "title-len": 28,
+        "artist-len": 24,
+        "tooltip-format": "{title}\n{artist} · {album}\n\nclic: pausa · rueda: canción · clic der.: siguiente",
+        "on-click": "playerctl -p playerctld play-pause",
+        "on-click-right": "playerctl -p playerctld next",
+        "on-scroll-up": "playerctl -p playerctld previous",
+        "on-scroll-down": "playerctl -p playerctld next"
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip": false,
+        "on-click": "~/.local/bin/toggle-calendar"
+    },
+
+    "cpu": {
+        "format": "<span color='#e0551f'>󰻠</span> {usage}%",
+        "interval": 2,
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "<span color='#d9a441'>󰍛</span> {used:0.1f}G",
+        "interval": 5,
+        "tooltip-format": "Usado: {used:0.1f}G / {total:0.1f}G"
+    },
+
+    "pulseaudio": {
+        "format": "<span color='#b0695a'>{icon}</span> {volume}%",
+        "format-icons": { "headphone": "󰋋", "default": ["󰕿", "󰖀", "󰕾"] },
+        "format-muted": "<span color='#5e5245'>󰖁</span> mudo",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+        "tooltip-format": "{desc}"
+    },
+
+    // Clic: conectar/desconectar AirPods · clic derecho: bluetoothctl
+    "bluetooth": {
+        "format": "<span color='#6f8fa6'>󰂯</span>",
+        "format-off": "<span color='#5e5245'>󰂲</span>",
+        "format-disabled": "<span color='#5e5245'>󰂲</span>",
+        "format-connected": "<span color='#8fabbf'>󰥰</span> {device_alias}",
+        "format-connected-battery": "<span color='#8fabbf'>󰥰</span> {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "Bluetooth {status}\nclic: AirPods · clic der.: bluetoothctl",
+        "tooltip-format-connected": "{device_enumerate}\n\nclic: desconectar AirPods",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "~/.local/bin/airpods-toggle",
+        "on-click-right": "kitty -e bluetoothctl"
+    },
+
+    "battery": {
+        "states": { "warning": 30, "critical": 15 },
+        "format": "<span color='#8a9a5b'>{icon}</span> {capacity}%",
+        "format-charging": "<span color='#a6b577'>󰂄</span> {capacity}%",
+        "format-plugged": "<span color='#a6b577'>󰚥</span> {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "tooltip-format": "{timeTo}"
+    },
+
+    "network": {
+        "format-wifi": "<span color='#e2cda8'>󰤨</span>",
+        "format-ethernet": "<span color='#e2cda8'>󰈀</span>",
+        "format-disconnected": "󰤭",
+        "tooltip-format-wifi": "{essid}  {signalStrength}%\n{ipaddr}",
+        "on-click": "networkmanager_dmenu",
+        "on-click-right": "kitty -e nmtui"
+    },
+
+    // Cafeína: con el café lleno no se bloquea ni suspende (hypridle lo respeta)
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": { "activated": "󰅶", "deactivated": "󰾪" },
+        "tooltip-format-activated": "Cafeína: la pantalla no se apaga",
+        "tooltip-format-deactivated": "Cafeína apagada"
+    },
+
+    "custom/pomodoro": {
+        "exec": "~/.local/bin/pomodoro status",
+        "interval": 1,
+        "return-type": "json",
+        "on-click": "~/.local/bin/pomodoro toggle",
+        "on-click-right": "~/.local/bin/pomodoro skip",
+        "on-click-middle": "~/.local/bin/pomodoro reset"
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 8
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip-format": "Apagar / reiniciar / bloquear (Super+Esc)",
+        "on-click": "~/.config/rofi/powermenu.sh"
+    }
+}

@@ -1,0 +1,80 @@
+* {
+    bg:         #1d1a16ee;
+    bg-alt:     #2a241dee;
+    fg:         #ecdcc0;
+    fg-sel:     #ffffff;
+    sel-bg:     #e0551f33;
+    sel-bar:    #e0551f;
+    border:     #5e5245;
+    accent:     #e0551f;
+
+    background-color:   transparent;
+    text-color:         @fg;
+}
+
+window {
+    background-color:   @bg;
+    border:             1px solid;
+    border-color:       @border;
+    border-radius:      6px;
+    width:              480px;
+    padding:            12px;
+}
+
+mainbox {
+    background-color:   transparent;
+    children:           [ inputbar, listview ];
+    spacing:            8px;
+}
+
+inputbar {
+    background-color:   @bg-alt;
+    border-radius:      4px;
+    padding:            8px 12px;
+    children:           [ prompt, entry ];
+    spacing:            8px;
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    placeholder:        "buscar...";
+    placeholder-color:  @accent;
+}
+
+listview {
+    background-color:   transparent;
+    lines:              8;
+    columns:            1;
+    spacing:            2px;
+    scrollbar:          false;
+}
+
+element {
+    background-color:   transparent;
+    border:             0px 0px 0px 3px;
+    border-color:       transparent;
+    border-radius:      4px;
+    padding:            6px 10px;
+    spacing:            10px;
+    children:           [ element-icon, element-text ];
+}
+
+element selected {
+    background-color:   @sel-bg;
+    border-color:       @sel-bar;
+    text-color:         @fg-sel;
+}
+
+element-icon {
+    size:               20px;
+    background-color:   transparent;
+}
+
+element-text {
+    background-color:   transparent;
+    text-color:         inherit;
+    vertical-align:     0.5;
+}

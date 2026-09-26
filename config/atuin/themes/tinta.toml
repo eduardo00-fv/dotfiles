@@ -1,0 +1,13 @@
+## Tinta — paleta del canal (variante oscura)
+[theme]
+name = "tinta"
+
+[colors]
+AlertInfo = "#8a9a5b"
+AlertWarn = "#d9a441"
+AlertError = "#c9461b"
+Annotation = "#5e5245"
+Base = "#ecdcc0"
+Guidance = "#bfae90"
+Important = "#e0551f"
+Title = "#e2cda8"

@@ -1,0 +1,292 @@
+// Paleta Tinta (la del canal)
+$tinta:      #1d1a16;
+$superficie: #2a241d;
+$acento:     #e0551f;
+$texto:      #ecdcc0;
+$texto2:     #bfae90;
+$nogal:      #5e5245;
+$mostaza:    #d9a441;
+$oliva:      #8a9a5b;
+
+* {
+  all: unset;
+  font-family: "CaskaydiaCove Nerd Font Mono", monospace;
+  color: $texto;
+}
+
+.card {
+  background-color: rgba(29, 26, 22, 0.55);
+  border: 1px solid rgba(94, 82, 69, 0.45);
+  border-radius: 14px;
+  padding: 16px 22px;
+}
+
+.card-titulo {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: $texto2;
+  margin-bottom: 2px;
+}
+
+// ---------- Clima ----------
+
+.clima-icono {
+  // la variante Mono encoge los íconos al ancho de una celda
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 52px;
+  color: $acento;
+  min-width: 70px;
+}
+
+.clima-temp {
+  font-size: 44px;
+  font-weight: bold;
+}
+
+.clima-ciudad {
+  font-size: 13px;
+  color: $texto2;
+  margin-bottom: 9px;
+}
+
+.clima-desc {
+  font-size: 14px;
+}
+
+.clima-extra {
+  font-size: 12px;
+  color: $texto2;
+  margin-top: 4px;
+}
+
+// ---------- Sistema ----------
+
+.fila-nombre {
+  font-size: 13px;
+  color: $texto2;
+}
+
+.fila-valor {
+  font-size: 13px;
+}
+
+.barra {
+  trough {
+    min-height: 6px;
+    border-radius: 3px;
+    background-color: $superficie;
+  }
+  progress {
+    min-height: 6px;
+    border-radius: 3px;
+  }
+}
+
+.cpu progress   { background-color: $acento; }
+.ram progress   { background-color: $mostaza; }
+.bat progress   { background-color: $oliva; }
+.disco progress { background-color: $texto2; }
+
+// ---------- Reloj + accesos ----------
+
+.reloj-hora {
+  font-size: 68px;
+  font-weight: bold;
+  letter-spacing: -2px;
+}
+
+.reloj-fecha {
+  font-size: 17px;
+  color: $texto;
+}
+
+.reloj-saludo {
+  font-size: 13px;
+  color: $texto2;
+  margin-bottom: 8px;
+}
+
+.accesos {
+  padding-top: 12px;
+  border-top: 1px solid rgba(94, 82, 69, 0.45);
+}
+
+.acceso {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 20px;
+  color: $texto2;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.acceso:hover {
+  color: $acento;
+  background-color: rgba(224, 85, 31, 0.12);
+}
+
+// ---------- Botones de ícono (notificaciones, pomodoro) ----------
+
+.icono-btn {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 16px;
+  color: $texto2;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.icono-btn:hover {
+  color: $acento;
+  background-color: rgba(224, 85, 31, 0.12);
+}
+
+.icono-btn.activo {
+  color: $acento;
+}
+
+.icono-btn.grande {
+  font-size: 22px;
+  padding: 6px 9px;
+  background-color: $superficie;
+  border-radius: 10px;
+}
+
+// ---------- Notificaciones ----------
+
+.noti {
+  padding-left: 10px;
+  border-left: 2px solid $nogal;
+}
+
+.noti-app {
+  font-size: 11px;
+  color: $acento;
+}
+
+.noti-hace {
+  font-size: 11px;
+  color: $texto2;
+}
+
+.noti-titulo {
+  font-size: 13px;
+}
+
+.noti-cuerpo {
+  font-size: 12px;
+  color: $texto2;
+}
+
+.vacio {
+  font-size: 13px;
+  color: $texto2;
+}
+
+// ---------- Pomodoro ----------
+
+.pomo-tiempo {
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.pomo-fase {
+  font-size: 12px;
+  color: $texto2;
+}
+
+.pomo-barra progress { background-color: $acento; }
+.pomo.shortbreak .pomo-barra progress,
+.pomo.longbreak .pomo-barra progress { background-color: $oliva; }
+.pomo.paused .pomo-tiempo,
+.pomo.stopped .pomo-tiempo { color: $texto2; }
+
+// ---------- Paquetes ----------
+
+.paquetes {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(94, 82, 69, 0.45);
+}
+
+.paquetes-icono {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 16px;
+  color: $oliva;
+}
+
+.paquetes-icono.pendientes {
+  color: $mostaza;
+}
+
+.paquetes-texto,
+.paquetes-ultimo {
+  font-size: 12px;
+  color: $texto2;
+}
+
+// El * de arriba le pone la fuente Mono también a la etiqueta interna de cada
+// botón, y ahí los íconos se encogen: forzar la variante normal
+.acceso label,
+.icono-btn label {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+}
+.acceso label        { font-size: 20px; }
+.icono-btn label     { font-size: 16px; }
+.icono-btn.grande label { font-size: 22px; }
+
+// ---------- Música ----------
+.musica-arte {
+  min-width: 64px;
+  min-height: 64px;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  background-color: $superficie;
+}
+.musica-nota {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 28px;
+  color: $nogal;
+}
+.musica-titulo  { font-size: 15px; font-weight: bold; }
+.musica-artista { font-size: 12px; color: $texto2; }
+.musica-barra progress { background-color: $acento; }
+.musica.Paused .musica-titulo { color: $texto2; }
+
+// ---------- Tooltips ----------
+// El "all: unset" de arriba les quitaba fondo y padding: el texto quedaba
+// flotando y encimado sobre las tarjetas
+tooltip {
+  background-color: rgba(29, 26, 22, 0.95);
+  border: 1px solid rgba(94, 82, 69, 0.6);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+tooltip label {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 11px;
+  color: $texto;
+}
+
+// ---------- To-do ----------
+.tarea {
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+.tarea:hover { background-color: rgba(224, 85, 31, 0.10); }
+.tarea-check {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 16px;
+  color: $texto2;
+}
+.tarea-texto { font-size: 13px; }
+.tarea.hecha .tarea-check { color: $oliva; }
+.tarea.hecha .tarea-texto { color: $nogal; text-decoration: line-through; }
+.tarea:hover .tarea-check { color: $acento; }
+
+// ---------- Estado (en la fila de accesos) ----------
+.estado {
+  font-family: "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 12px;
+  color: $texto2;
+}
+.estado.pendientes { color: $mostaza; }

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Conecta/desconecta los AirPods (clic en el módulo bluetooth de la waybar).
+MAC="EC:46:54:79:7A:DE"
+if bluetoothctl info "$MAC" | grep -q 'Connected: yes'; then
+    bluetoothctl disconnect "$MAC" >/dev/null && notify-send -a Bluetooth "AirPods desconectados"
+else
+    rfkill unblock bluetooth; bluetoothctl power on >/dev/null
+    if bluetoothctl connect "$MAC" >/dev/null 2>&1; then
+        notify-send -a Bluetooth "AirPods conectados"
+    else
+        notify-send -a Bluetooth -u critical "No se pudieron conectar los AirPods" "¿Están fuera del estuche? Si dice br-connection-key-missing, hay que re-emparejarlos."
+    fi
+fi

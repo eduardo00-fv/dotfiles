@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+
+STATE_FILE="/tmp/pomodoro.state"
+WORK_SECS=1500
+SHORT_BREAK_SECS=300
+LONG_BREAK_SECS=900
+SESSIONS_BEFORE_LONG=4
+
+ICON_WORK="󱎫"
+ICON_BREAK="󱖐"
+ICON_PAUSED="󰏤"
+
+read_state() {
+    STATE="stopped"
+    PHASE="work"
+    SESSION=1
+    REMAINING=$WORK_SECS
+    END_EPOCH=0
+    [[ -f "$STATE_FILE" ]] && source "$STATE_FILE"
+}
+
+save_state() {
+    printf 'STATE=%s\nPHASE=%s\nSESSION=%d\nREMAINING=%d\nEND_EPOCH=%d\n' \
+        "$STATE" "$PHASE" "$SESSION" "$REMAINING" "$END_EPOCH" > "$STATE_FILE"
+}
+
+phase_secs() {
+    case "$1" in
+        work)       echo $WORK_SECS ;;
+        shortbreak) echo $SHORT_BREAK_SECS ;;
+        longbreak)  echo $LONG_BREAK_SECS ;;
+    esac
+}
+
+phase_label() {
+    case "$1" in
+        work)       echo "Trabajo" ;;
+        shortbreak) echo "Descanso corto" ;;
+        longbreak)  echo "Descanso largo" ;;
+    esac
+}
+
+advance_phase() {
+    case "$PHASE" in
+        work)
+            if (( SESSION % SESSIONS_BEFORE_LONG == 0 )); then
+                PHASE="longbreak"
+            else
+                PHASE="shortbreak"
+            fi
+            ;;
+        shortbreak|longbreak)
+            SESSION=$(( SESSION + 1 ))
+            PHASE="work"
+            ;;
+    esac
+    REMAINING=$(phase_secs "$PHASE")
+}
+
+cmd_status() {
+    read_state
+    local now
+    now=$(date +%s)
+
+    if [[ "$STATE" == "running" ]]; then
+        local rem=$(( END_EPOCH - now ))
+        if (( rem <= 0 )); then
+            local done_label
+            done_label=$(phase_label "$PHASE")
+            advance_phase
+            END_EPOCH=$(( now + REMAINING ))
+            save_state
+            notify-send -u normal "Pomodoro" "$done_label terminado · $(phase_label "$PHASE") comenzando" -t 6000
+            rem=$REMAINING
+        fi
+        REMAINING=$rem
+    fi
+
+    local icon class
+    case "$PHASE" in
+        work)
+            icon="$ICON_WORK"
+            class="work"
+            ;;
+        shortbreak|longbreak)
+            icon="$ICON_BREAK"
+            class="$PHASE"
+            ;;
+    esac
+
+    if [[ "$STATE" == "paused" ]]; then
+        icon="$ICON_PAUSED"
+        class="${class}-paused"
+    elif [[ "$STATE" == "stopped" ]]; then
+        icon="$ICON_PAUSED"
+        class="stopped"
+        REMAINING=$WORK_SECS
+    fi
+
+    local mins secs
+    mins=$(( REMAINING / 60 ))
+    secs=$(( REMAINING % 60 ))
+
+    printf '{"text": "%s %02d:%02d", "class": "%s", "tooltip": "%s · sesión %d"}\n' \
+        "$icon" "$mins" "$secs" "$class" "$(phase_label "$PHASE")" "$SESSION"
+}
+
+cmd_toggle() {
+    read_state
+    local now
+    now=$(date +%s)
+    if [[ "$STATE" == "running" ]]; then
+        REMAINING=$(( END_EPOCH - now ))
+        (( REMAINING < 0 )) && REMAINING=0
+        STATE="paused"
+        END_EPOCH=0
+    else
+        STATE="running"
+        END_EPOCH=$(( now + REMAINING ))
+    fi
+    save_state
+}
+
+cmd_skip() {
+    read_state
+    local now
+    now=$(date +%s)
+    local was_running=false
+    [[ "$STATE" == "running" ]] && was_running=true
+    advance_phase
+    if $was_running; then
+        STATE="running"
+        END_EPOCH=$(( now + REMAINING ))
+    fi
+    save_state
+}
+
+cmd_reset() {
+    STATE="stopped"
+    PHASE="work"
+    SESSION=1
+    REMAINING=$WORK_SECS
+    END_EPOCH=0
+    save_state
+}
+
+case "${1:-status}" in
+    status) cmd_status ;;
+    toggle) cmd_toggle ;;
+    skip)   cmd_skip ;;
+    reset)  cmd_reset ;;
+    *) echo "Uso: $0 {status|toggle|skip|reset}" >&2; exit 1 ;;
+esac

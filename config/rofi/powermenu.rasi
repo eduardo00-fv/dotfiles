@@ -1,0 +1,67 @@
+* {
+    bg:         #1d1a16ee;
+    bg-alt:     #2a241dee;
+    fg:         #ecdcc0;
+    fg-sel:     #ffffff;
+    sel-bg:     #e0551f33;
+    sel-bar:    #e0551f;
+    border:     #5e5245;
+
+    background-color:   transparent;
+    text-color:         @fg;
+}
+
+window {
+    background-color:   @bg;
+    border:             1px solid;
+    border-color:       @border;
+    border-radius:      6px;
+    width:              220px;
+    padding:            10px;
+    location:           center;
+}
+
+mainbox {
+    background-color:   transparent;
+    children:           [ inputbar, listview ];
+    spacing:            8px;
+}
+
+inputbar {
+    background-color:   @bg-alt;
+    border-radius:      4px;
+    padding:            6px 12px;
+    children:           [ prompt ];
+}
+
+prompt {
+    text-color: @fg;
+}
+
+listview {
+    background-color:   transparent;
+    lines:              5;
+    columns:            1;
+    spacing:            2px;
+    scrollbar:          false;
+}
+
+element {
+    background-color:   transparent;
+    border:             0px 0px 0px 3px;
+    border-color:       transparent;
+    border-radius:      4px;
+    padding:            8px 12px;
+}
+
+element selected {
+    background-color:   @sel-bg;
+    border-color:       @sel-bar;
+    text-color:         @fg-sel;
+}
+
+element-text {
+    background-color:   transparent;
+    text-color:         inherit;
+    vertical-align:     0.5;
+}

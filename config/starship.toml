@@ -1,0 +1,65 @@
+format = """
+$username$directory$git_branch$git_status$cmd_duration
+$character"""
+
+add_newline = false
+
+[username]
+style_user = "bold fg:#e0551f"
+style_root = "bold fg:#b83a2e"
+format = "[$user]($style)  "
+show_always = true
+
+[directory]
+style = "bold fg:#ecdcc0"
+format = "[$path]($style)[$read_only]($read_only_style)  "
+truncation_length = 3
+truncate_to_repo = true
+read_only = " "
+read_only_style = "fg:#b83a2e"
+
+[git_branch]
+symbol = " "
+style = "fg:#8a9a5b"
+format = "[$symbol$branch]($style)  "
+
+[git_status]
+style = "fg:#d9a441"
+format = "([$all_status$ahead_behind]($style)  )"
+modified = "~"
+untracked = "?"
+staged = "+"
+deleted = "-"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+
+[cmd_duration]
+min_time = 1000
+style = "fg:#5e5245"
+format = "[took $duration]($style)"
+
+[character]
+success_symbol = "[❯](bold fg:#e0551f)"
+error_symbol = "[❯](bold fg:#b83a2e)"
+vimcmd_symbol = "[❮](bold fg:#bfae90)"
+
+[python]
+symbol = " "
+style = "fg:#d9a441"
+format = "[$symbol$version]($style)  "
+
+[nodejs]
+symbol = " "
+style = "fg:#d9a441"
+format = "[$symbol$version]($style)  "
+
+[rust]
+symbol = " "
+style = "fg:#d9a441"
+format = "[$symbol$version]($style)  "
+
+[package]
+disabled = true
+
+[line_break]
+disabled = false

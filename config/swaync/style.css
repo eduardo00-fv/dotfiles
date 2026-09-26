@@ -1,0 +1,74 @@
+* {
+    font-family: "CaskaydiaCove Nerd Font", monospace;
+    font-size: 13px;
+}
+
+.notification-row {
+    outline: none;
+}
+
+.notification {
+    background: rgba(29, 26, 22, 0.88);
+    border: 1px solid rgba(191, 174, 144, 0.35);
+    border-left: 3px solid #e0551f;
+    border-radius: 6px;
+    margin: 4px 8px;
+    padding: 10px 14px;
+    color: #ecdcc0;
+    box-shadow: none;
+}
+
+.notification-content {
+    background: transparent;
+    padding: 0;
+}
+
+.notification .summary {
+    font-size: 13px;
+    font-weight: bold;
+    color: #e2cda8;
+}
+
+.notification .body {
+    font-size: 12px;
+    color: #bfae90;
+}
+
+.notification .time {
+    font-size: 11px;
+    color: #5e5245;
+}
+
+.notification.critical {
+    border-color: rgba(184, 58, 46, 0.8);
+    border-left-color: #b83a2e;
+}
+
+.close-button {
+    background: transparent;
+    border: none;
+    color: #5e5245;
+    padding: 0;
+}
+
+.close-button:hover {
+    color: #e0551f;
+    background: transparent;
+}
+
+/* Panel de historial */
+.control-center {
+    background: rgba(29, 26, 22, 0.92);
+    border: 1px solid rgba(224, 85, 31, 0.45);
+    border-radius: 8px;
+    color: #ecdcc0;
+    padding: 8px;
+}
+
+.control-center-list {
+    background: transparent;
+}
+
+.blank-window {
+    background: transparent;
+}
