@@ -6,7 +6,7 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "CaskaydiaCove Nerd Font", "Liberation Mono", monospace;
+    font-family: "Maple Mono NF", "CaskaydiaCove Nerd Font", monospace;
     font-size: 13px;
     min-height: 0;
 }
@@ -58,7 +58,7 @@ window#waybar.empty #window { padding: 0; margin: 0; }
 
 #workspaces button:hover {
     color: #e2cda8;
-    background: rgba(191, 174, 144, 0.12);
+    background: rgba(147, 163, 90, 0.22);
     box-shadow: none;
     text-shadow: none;
 }
@@ -90,7 +90,7 @@ window#waybar.empty #window { padding: 0; margin: 0; }
 #mpris:hover   { color: #e2cda8; }
 
 #clock {
-    color: #ecdcc0;
+    color: #93a35a;
     font-weight: bold;
     padding: 0 10px;
 }

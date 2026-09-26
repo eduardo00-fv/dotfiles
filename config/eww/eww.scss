@@ -7,10 +7,11 @@ $texto2:     #bfae90;
 $nogal:      #5e5245;
 $mostaza:    #d9a441;
 $oliva:      #8a9a5b;
+$musgo:      #93a35a;   // segundo acento
 
 * {
   all: unset;
-  font-family: "CaskaydiaCove Nerd Font Mono", monospace;
+  font-family: "Maple Mono NF", monospace;
   color: $texto;
 }
 
@@ -24,7 +25,7 @@ $oliva:      #8a9a5b;
 .card-titulo {
   font-size: 11px;
   letter-spacing: 3px;
-  color: $texto2;
+  color: $musgo;
   margin-bottom: 2px;
 }
 
@@ -102,7 +103,7 @@ $oliva:      #8a9a5b;
 
 .reloj-saludo {
   font-size: 13px;
-  color: $texto2;
+  color: $musgo;
   margin-bottom: 8px;
 }
 
@@ -279,7 +280,7 @@ tooltip label {
   color: $texto2;
 }
 .tarea-texto { font-size: 13px; }
-.tarea.hecha .tarea-check { color: $oliva; }
+.tarea.hecha .tarea-check { color: $musgo; }
 .tarea.hecha .tarea-texto { color: $nogal; text-decoration: line-through; }
 .tarea:hover .tarea-check { color: $acento; }
 

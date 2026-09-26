@@ -16,6 +16,7 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 | ![](https://placehold.co/16x16/bfae90/bfae90.png) | arena (texto 2) | `#bfae90` |
 | ![](https://placehold.co/16x16/5e5245/5e5245.png) | nogal (bordes) | `#5e5245` |
 | ![](https://placehold.co/16x16/d9a441/d9a441.png) | ocre | `#d9a441` |
+| ![](https://placehold.co/16x16/93a35a/93a35a.png) | musgo (segundo acento) | `#93a35a` |
 | ![](https://placehold.co/16x16/8a9a5b/8a9a5b.png) | oliva | `#8a9a5b` |
 
 ## Qué hay
@@ -25,7 +26,8 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 | **WM** | Hyprland 0.56, config en Lua (`hypr/hyprland.lua`) |
 | **Barra** | Waybar en "islas" flotantes: workspaces numerados (el activo se estira en una píldora), música + reloj, sistema, AirPods, cafeína, apagado |
 | **Widgets** | eww: reloj con accesos, música (Apple Music web vía MPRIS), clima (wttr.in), notificaciones (swaync), pomodoro, to-do |
-| **Fondo** | swaybg con fotos fijas en 4K; `wallpaper-daemon.py` rota cada 30 min, pausa en pantalla completa y reaplica al conectar monitores. Super+W cambia |
+| **Fuente** | [Maple Mono NF](https://github.com/subframe7536/maple-font) en todo (terminal, barra, widgets, lock) |
+| **Fondo** | dos modos: fotos 4K o degradados con grano generados en la paleta (`fondos/generar-degradados.py`); swaybg con `wallpaper-daemon.py` rota cada 30 min, pausa en pantalla completa y reaplica al conectar monitores. Super+W cambia |
 | **Lock / idle** | hyprlock + hypridle, usando la misma foto del fondo |
 | **Terminal** | kitty + starship + fastfetch + atuin (tema `tinta`) |
 | **Menús** | rofi (lanzador y menú de apagado), swaync |
@@ -35,6 +37,7 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 | | |
 |---|---|
 | Super+W | siguiente fondo |
+| Super+Shift+W | cambiar entre fotos y degradados |
 | Super+T | nueva tarea en el to-do |
 | Super+M | Apple Music: abrir / mostrar / ocultar su cajón (sigue sonando oculta) |
 | Super+Esc | menú de apagado |
@@ -47,10 +50,12 @@ git clone https://github.com/eduardo00-fv/dotfiles ~/dotfiles && cd ~/dotfiles
 ./install.sh      # symlinks a ~/.config y ~/.local/bin (respalda lo que exista)
 ```
 
-Paquetes (Arch): `hyprland hyprlock hypridle waybar eww swaybg swaync rofi kitty starship fastfetch atuin playerctl pacman-contrib jq python ttf-cascadia-code-nerd`
+Paquetes (Arch): `hyprland hyprlock hypridle waybar eww swaybg swaync rofi kitty starship fastfetch atuin playerctl pacman-contrib jq python python-numpy python-pillow ttf-cascadia-code-nerd`
+y la fuente Maple Mono NF (release de GitHub en `~/.local/share/fonts`).
 y del AUR: `yay` (para contar actualizaciones AUR).
 
-Las fotos de fondo van en `~/Pictures/Walpapers/fotos/` (no están en el repo).
+Las fotos de fondo van en `~/Pictures/Walpapers/fotos/` (no están en el repo). Los degradados se generan con
+`python3 fondos/generar-degradados.py 3840 2160 ~/Pictures/Walpapers/degradados`.
 
 ## Personalizar
 

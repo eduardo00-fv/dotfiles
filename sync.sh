@@ -16,4 +16,5 @@ cp "$HOME/.config/starship.toml" config/starship.toml
 
 mkdir -p bin
 for f in pomodoro toggle-calendar airpods-toggle apple-music; do cp "$HOME/.local/bin/$f" bin/; done
+mkdir -p fondos && cp "$HOME/Pictures/Walpapers/degradados/generar.py" fondos/generar-degradados.py
 echo "sincronizado: $(find config bin -type f | wc -l) archivos"

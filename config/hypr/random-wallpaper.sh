@@ -11,21 +11,36 @@
 # Es idempotente y se puede re-ejecutar en caliente. wallpaper-daemon.py lo
 # llama con --reapply en monitoradded/monitorremoved y sin args cada 30 min.
 #
-# Uso: random-wallpaper.sh [--reapply]
+# Dos modos: "fotos" (~/Pictures/Walpapers/fotos) y "degradados"
+# (~/Pictures/Walpapers/degradados, generados con generar.py en la paleta).
+# El modo se guarda en ~/.config/hypr/wallpaper-mode y sobrevive reinicios.
+#
+# Uso: random-wallpaper.sh [--reapply | --toggle-mode]
 #   (sin args) saca la siguiente foto de la "bolsa" barajada: no repite
 #              hasta haber pasado por todas. Lo usan el login, Super+W y la
 #              rotación cada 30 min de wallpaper-daemon.py
 #   --reapply  reutiliza la foto actual en vez de sortear otra
+#   --toggle-mode  cambia entre fotos y degradados y pone uno del modo nuevo (Super+Shift+W)
 
 set -u
 
 WALL_DIR="$HOME/Pictures/Walpapers"
-PHOTO_DIR="$WALL_DIR/fotos"
 LOCK_LINK="$WALL_DIR/lockscreen-active.jpg"
+MODE_FILE="$HOME/.config/hypr/wallpaper-mode"
 STATE_DIR="${XDG_RUNTIME_DIR:-/tmp}/wallpaper"
 STATE_FILE="$STATE_DIR/current"
-BAG_FILE="$STATE_DIR/bag"
 mkdir -p "$STATE_DIR"
+
+mode=fotos
+[ -s "$MODE_FILE" ] && read -r mode < "$MODE_FILE"
+[ "$mode" = degradados ] || mode=fotos
+if [ "${1:-}" = "--toggle-mode" ]; then
+    if [ "$mode" = fotos ]; then mode=degradados; else mode=fotos; fi
+    printf '%s\n' "$mode" > "$MODE_FILE"
+    notify-send -a Wallpaper -t 2000 "Fondos: $mode"
+fi
+PHOTO_DIR="$WALL_DIR/$mode"
+BAG_FILE="$STATE_DIR/bag-$mode"
 
 mapfile -t photos < <(find "$PHOTO_DIR" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -printf '%f\n' | sort)
 [ "${#photos[@]}" -eq 0 ] && { echo "No hay fotos en $PHOTO_DIR" >&2; exit 1; }

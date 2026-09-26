@@ -95,7 +95,7 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = "rgba(5e5245cc)",
+            active_border   = "rgba(6b7b3fcc)",   -- musgo mate
             inactive_border = "rgba(2a241d99)",
         },
 
@@ -164,6 +164,7 @@ hl.bind(mainMod .. " + Q",         hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"))
 hl.bind(mainMod .. " + L",         hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + W",         hl.dsp.exec_cmd("~/.config/hypr/random-wallpaper.sh"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/random-wallpaper.sh --toggle-mode"))   -- fotos <-> degradados
 hl.bind(mainMod .. " + E",         hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + F",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D",         hl.dsp.workspace.toggle_special("minimized"))
