@@ -26,9 +26,9 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 | **WM** | Hyprland 0.56, config en Lua (`hypr/hyprland.lua`) |
 | **Barra** | Waybar en "islas" flotantes: workspaces numerados (el activo se estira en una píldora), música + reloj, sistema, AirPods, cafeína, apagado |
 | **Widgets** | eww: reloj con accesos, música (Apple Music web vía MPRIS), clima (wttr.in), notificaciones (swaync), pomodoro, to-do |
-| **Fuente** | [Maple Mono NF](https://github.com/subframe7536/maple-font) en todo (terminal, barra, widgets, lock) |
+| **Fuente** | CaskaydiaCove Nerd Font en todo |
 | **Fondo** | dos modos: fotos 4K o degradados con grano generados en la paleta (`fondos/generar-degradados.py`); swaybg con `wallpaper-daemon.py` rota cada 30 min, pausa en pantalla completa y reaplica al conectar monitores. Super+W cambia |
-| **Lock / idle** | hyprlock + hypridle, usando la misma foto del fondo |
+| **Lock / idle** | hyprlock + hypridle: fondo actual desenfocado, reloj delgado y una frase para hacer *lock in* (`hypr/frases-thrain.txt`) |
 | **Terminal** | kitty + starship + fastfetch + atuin (tema `tinta`) |
 | **Menús** | rofi (lanzador y menú de apagado), swaync |
 
@@ -51,7 +51,6 @@ git clone https://github.com/eduardo00-fv/dotfiles ~/dotfiles && cd ~/dotfiles
 ```
 
 Paquetes (Arch): `hyprland hyprlock hypridle waybar eww swaybg swaync rofi kitty starship fastfetch atuin playerctl pacman-contrib jq python python-numpy python-pillow ttf-cascadia-code-nerd`
-y la fuente Maple Mono NF (release de GitHub en `~/.local/share/fonts`).
 y del AUR: `yay` (para contar actualizaciones AUR).
 
 Las fotos de fondo van en `~/Pictures/Walpapers/fotos/` (no están en el repo). Los degradados se generan con

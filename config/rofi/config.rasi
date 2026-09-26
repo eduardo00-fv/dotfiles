@@ -2,7 +2,7 @@ configuration {
     modi:           "drun,run";
     show-icons:     true;
     icon-theme:     "Papirus";
-    font:           "Maple Mono NF 12";
+    font:           "CaskaydiaCove Nerd Font Mono 12";
     drun-display-format: "{name}";
     display-drun:   "";
     terminal:       "kitty";
