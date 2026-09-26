@@ -13,10 +13,9 @@
     "modules-center": ["mpris", "clock"],
     "modules-right": ["custom/pomodoro", "cpu", "memory", "pulseaudio", "bluetooth", "battery", "network", "idle_inhibitor", "tray", "custom/power"],
 
-    // Puntos; el activo se estira a una píldora (animación en style.css)
+    // Números; el activo se estira a una píldora terracota (animación en style.css)
     "hyprland/workspaces": {
-        "format": "{icon}",
-        "format-icons": { "active": "", "default": "", "urgent": "" },
+        "format": "{id}",
         "on-click": "activate",
         "sort-by-number": true,
         "tooltip": false

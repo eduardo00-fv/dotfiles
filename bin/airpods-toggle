@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Conecta/desconecta los AirPods (clic en el módulo bluetooth de la waybar).
-MAC="EC:46:54:79:7A:DE"
+# La MAC va en ~/.config/airpods-mac (una línea), fuera del repo de dotfiles.
+# Para verla: bluetoothctl devices
+MAC=$(cat "${XDG_CONFIG_HOME:-$HOME/.config}/airpods-mac" 2>/dev/null)
+[ -z "$MAC" ] && { notify-send -a Bluetooth "Falta ~/.config/airpods-mac" "Pon ahí la MAC de tus audífonos (bluetoothctl devices)"; exit 1; }
 if bluetoothctl info "$MAC" | grep -q 'Connected: yes'; then
     bluetoothctl disconnect "$MAC" >/dev/null && notify-send -a Bluetooth "AirPods desconectados"
 else

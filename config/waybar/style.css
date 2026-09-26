@@ -39,19 +39,20 @@ tooltip label {
 /* Si no hay ventana ni música, que la isla no quede con hueco */
 window#waybar.empty #window { padding: 0; margin: 0; }
 
-/* ---------- Workspaces: puntos, el activo se estira ---------- */
+/* ---------- Workspaces: números, el activo se estira ---------- */
 #workspaces {
     padding: 0 4px;
 }
 
 #workspaces button {
-    padding: 0 4px;
-    margin: 7px 3px;
-    min-width: 10px;
+    padding: 0 6px;
+    margin: 5px 2px;
+    min-width: 12px;
     border-radius: 8px;
-    color: #5e5245;
+    color: #8a7d6b;
     background: transparent;
-    font-size: 10px;
+    font-size: 12px;
+    font-weight: bold;
     transition: all 0.35s cubic-bezier(0.55, -0.35, 0.3, 1.4);
 }
 
@@ -63,7 +64,7 @@ window#waybar.empty #window { padding: 0; margin: 0; }
 }
 
 #workspaces button.active {
-    min-width: 30px;
+    min-width: 28px;
     color: #1d1a16;
     background: #e0551f;
 }

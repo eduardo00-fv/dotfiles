@@ -23,7 +23,7 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 | | |
 |---|---|
 | **WM** | Hyprland 0.56, config en Lua (`hypr/hyprland.lua`) |
-| **Barra** | Waybar en "islas" flotantes: workspaces como puntos (el activo se estira), música + reloj, sistema, AirPods, cafeína, apagado |
+| **Barra** | Waybar en "islas" flotantes: workspaces numerados (el activo se estira en una píldora), música + reloj, sistema, AirPods, cafeína, apagado |
 | **Widgets** | eww: reloj con accesos, música (Apple Music web vía MPRIS), clima (wttr.in), notificaciones (swaync), pomodoro, to-do |
 | **Fondo** | swaybg con fotos fijas en 4K; `wallpaper-daemon.py` rota cada 30 min, pausa en pantalla completa y reaplica al conectar monitores. Super+W cambia |
 | **Lock / idle** | hyprlock + hypridle, usando la misma foto del fondo |
@@ -42,7 +42,7 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 ## Instalar
 
 ```bash
-git clone <este repo> ~/dotfiles && cd ~/dotfiles
+git clone https://github.com/eduardo00-fv/dotfiles ~/dotfiles && cd ~/dotfiles
 ./install.sh      # symlinks a ~/.config y ~/.local/bin (respalda lo que exista)
 ```
 
@@ -53,7 +53,7 @@ Las fotos de fondo van en `~/Pictures/Walpapers/fotos/` (no están en el repo).
 
 ## Personalizar
 
-- `bin/airpods-toggle`: cambia la MAC por la de tus audífonos.
+- `bin/airpods-toggle`: pon la MAC de tus audífonos en `~/.config/airpods-mac` (`bluetoothctl devices`).
 - `eww/eww.yuck`: accesos rápidos del reloj y monitor (`:monitor` usa el modelo de la pantalla, ver `hyprctl monitors`).
 - `eww/scripts/weather.py`: `CITY` vacío = ubicación por IP.
 
