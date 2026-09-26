@@ -168,6 +168,7 @@ hl.bind(mainMod .. " + E",         hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + F",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D",         hl.dsp.workspace.toggle_special("minimized"))
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.window.move({ workspace = "special:minimized" }))
+hl.bind(mainMod .. " + M",         hl.dsp.exec_cmd("~/.local/bin/apple-music"))   -- abre / muestra / oculta Apple Music
 hl.bind(mainMod .. " + Space",     hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind(mainMod .. " + Escape",    hl.dsp.exec_cmd("~/.config/rofi/powermenu.sh"))
 hl.bind(mainMod .. " + V",         hl.dsp.exec_cmd("sh -c 'cliphist list | rofi -dmenu | cliphist decode | wl-copy'"))
@@ -231,6 +232,14 @@ hl.layer_rule({
     match        = { namespace = "^gtk-layer-shell$" },
     blur         = true,
     ignore_alpha = 0.3,
+})
+
+-- Apple Music (app web de Brave) siempre en su cajón: suena sin ocupar escritorio. Super+M
+hl.window_rule({
+    name  = "apple-music-cajon",
+    match = { class = "^(brave-music\\.apple\\.com__-Default)$" },
+
+    workspace = "special:musica silent",
 })
 
 hl.window_rule({

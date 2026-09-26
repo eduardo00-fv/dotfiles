@@ -80,7 +80,7 @@
                :text {musica.activo ? (musica.album != "" ? "${musica.artista} · ${musica.album}" : musica.artista) : "Abre Apple Music para empezar"}))
       (box :orientation "h" :space-evenly false :spacing 6 :valign "center"
         (button :class "icono-btn grande" :visible {!musica.activo} :tooltip "Abrir Apple Music"
-                :onclick "brave --app=https://music.apple.com >/dev/null 2>&1 &" "󰐊")
+                :onclick "~/.local/bin/apple-music &" "󰐊")
         (box :orientation "h" :space-evenly false :spacing 6 :visible {musica.activo}
           (button :class "icono-btn" :tooltip "Anterior" :onclick "playerctl -p playerctld previous" "󰒮")
           (button :class "icono-btn grande" :tooltip {musica.estado == "Playing" ? "Pausar" : "Reproducir"}

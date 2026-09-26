@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Apple Music vive en su propio cajón (workspace especial "musica"):
+# sigue sonando aunque no se vea. Si no está abierta, la abre; si ya está, muestra/oculta el cajón.
+if hyprctl clients | grep -q 'class: brave-music.apple.com'; then
+    hyprctl dispatch 'hl.dsp.workspace.toggle_special("musica")' >/dev/null
+else
+    brave --app=https://music.apple.com >/dev/null 2>&1 &
+fi

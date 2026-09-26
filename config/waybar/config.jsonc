@@ -33,9 +33,10 @@
         "format-paused": "<span color='#5e5245'>󰏤</span>  {title}",
         "title-len": 28,
         "artist-len": 24,
-        "tooltip-format": "{title}\n{artist} · {album}\n\nclic: pausa · rueda: canción · clic der.: siguiente",
+        "tooltip-format": "{title}\n{artist} · {album}\n\nclic: pausa · rueda: canción · clic der.: siguiente · clic medio: mostrar Apple Music",
         "on-click": "playerctl -p playerctld play-pause",
         "on-click-right": "playerctl -p playerctld next",
+        "on-click-middle": "~/.local/bin/apple-music",
         "on-scroll-up": "playerctl -p playerctld previous",
         "on-scroll-down": "playerctl -p playerctld next"
     },

@@ -15,5 +15,5 @@ rm -f config/atuin/themes/arcade.toml config/atuin/themes/retro.toml
 cp "$HOME/.config/starship.toml" config/starship.toml
 
 mkdir -p bin
-for f in pomodoro toggle-calendar airpods-toggle; do cp "$HOME/.local/bin/$f" bin/; done
+for f in pomodoro toggle-calendar airpods-toggle apple-music; do cp "$HOME/.local/bin/$f" bin/; done
 echo "sincronizado: $(find config bin -type f | wc -l) archivos"

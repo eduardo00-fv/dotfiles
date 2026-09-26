@@ -36,6 +36,7 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 |---|---|
 | Super+W | siguiente fondo |
 | Super+T | nueva tarea en el to-do |
+| Super+M | Apple Music: abrir / mostrar / ocultar su cajón (sigue sonando oculta) |
 | Super+Esc | menú de apagado |
 | Super+Shift+S | suspender |
 
