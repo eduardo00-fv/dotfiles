@@ -2,6 +2,14 @@
 
 ![escritorio](capturas/escritorio.jpg)
 
+![terminales: cava, yazi y fastfetch](capturas/terminales.jpg)
+
+<p align="center"><img src="capturas/forja.gif" width="640" alt="fastfetch: el casco da una vuelta y THRAIN se forja"></p>
+
+| Vista general (Super+Tab) | Calendario (clic en el reloj) |
+|---|---|
+| ![vista general](capturas/vista-general.jpg) | ![calendario](capturas/calendario.jpg) |
+
 Arch Linux + Hyprland con una paleta cálida y mate (tinta, maple, terracota) en lugar de neón.
 Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 
