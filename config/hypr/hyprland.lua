@@ -17,6 +17,7 @@ hl.env("LIBVA_DRIVER_NAME", "iHD")
 
 -- Wayland general
 hl.env("MOZ_ENABLE_WAYLAND", "1")
+hl.env("XCURSOR_THEME", "Bibata-Modern-Amber")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORM", "wayland")
@@ -50,6 +51,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hypridle")
     hl.exec_cmd("python3 ~/.config/hypr/wallpaper-daemon.py")
     hl.exec_cmd("~/.config/eww/restart.sh")   -- widgets de escritorio
+    hl.exec_cmd("qs -c overview")             -- vista de escritorios (Super+Tab)
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
@@ -95,7 +97,7 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = "rgba(6b7b3fcc)",   -- musgo mate
+            active_border   = { colors = { "rgba(93a35aee)", "rgba(5e5245aa)", "rgba(e0551fcc)" }, angle = 45 },   -- musgo → nogal → terracota, gira
             inactive_border = "rgba(2a241d99)",
         },
 
@@ -141,12 +143,23 @@ hl.config({
     },
 })
 
-hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
+-- Curvas: "resorte" se pasa un pelo y regresa; "salida" se encoge rápido
+hl.curve("resorte", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
+hl.curve("entrada", { type = "bezier", points = { { 0.1, 1.1 }, { 0.1, 1.1 } } })
+hl.curve("salida",  { type = "bezier", points = { { 0.3, -0.3 }, { 0, 1 } } })
+hl.curve("suave",   { type = "bezier", points = { { 0.25, 1 }, { 0.5, 1 } } })
+hl.curve("lineal",  { type = "bezier", points = { { 1, 1 }, { 1, 1 } } })
 
-hl.animation({ leaf = "windows",    enabled = true, speed = 7, bezier = "myBezier" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 7, bezier = "default", style = "popin 80%" })
-hl.animation({ leaf = "fade",       enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 6, bezier = "default" })
+hl.animation({ leaf = "windowsIn",   enabled = true, speed = 5,  bezier = "entrada", style = "popin 70%" })
+hl.animation({ leaf = "windowsOut",  enabled = true, speed = 4,  bezier = "salida",  style = "popin 70%" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 5,  bezier = "resorte", style = "slide" })
+hl.animation({ leaf = "fade",        enabled = true, speed = 6,  bezier = "suave" })
+hl.animation({ leaf = "layersIn",    enabled = true, speed = 4,  bezier = "entrada", style = "popin 85%" })
+hl.animation({ leaf = "layersOut",   enabled = true, speed = 3,  bezier = "salida",  style = "fade" })
+hl.animation({ leaf = "border",      enabled = true, speed = 8,  bezier = "suave" })
+hl.animation({ leaf = "borderangle", enabled = true, speed = 60, bezier = "lineal", style = "loop" })   -- el borde gira lento
+hl.animation({ leaf = "workspaces",  enabled = true, speed = 5,  bezier = "resorte", style = "slide" })
+hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 5, bezier = "resorte", style = "slidevert" })   -- cajón de música baja desde arriba
 
 
 ---------------------------
@@ -165,11 +178,13 @@ hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("command -v hyprshutdown >/de
 hl.bind(mainMod .. " + L",         hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + W",         hl.dsp.exec_cmd("~/.config/hypr/random-wallpaper.sh"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/random-wallpaper.sh --toggle-mode"))   -- fotos <-> degradados
-hl.bind(mainMod .. " + E",         hl.dsp.exec_cmd("nautilus"))
+hl.bind(mainMod .. " + E",         hl.dsp.exec_cmd("kitty --class yazi -e yazi"))   -- explorador (yazi)
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + F",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D",         hl.dsp.workspace.toggle_special("minimized"))
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.window.move({ workspace = "special:minimized" }))
 hl.bind(mainMod .. " + M",         hl.dsp.exec_cmd("~/.local/bin/apple-music"))   -- abre / muestra / oculta Apple Music
+hl.bind(mainMod .. " + Tab",       hl.dsp.exec_cmd("qs ipc -c overview call overview toggle"))   -- vista de todos los escritorios
 hl.bind(mainMod .. " + Space",     hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind(mainMod .. " + Escape",    hl.dsp.exec_cmd("~/.config/rofi/powermenu.sh"))
 hl.bind(mainMod .. " + V",         hl.dsp.exec_cmd("sh -c 'cliphist list | rofi -dmenu | cliphist decode | wl-copy'"))
@@ -249,4 +264,12 @@ hl.window_rule({
 
     float = true,
     move  = "43% 4%",
+})
+
+-- Vista de escritorios (quickshell-overview, Super+Tab): desenfoque detrás del panel
+hl.layer_rule({
+    name         = "overview-blur",
+    match        = { namespace = "^quickshell:overview" },
+    blur         = true,
+    ignore_alpha = 0.2,
 })

@@ -10,7 +10,7 @@
     "spacing": 0,
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["mpris", "clock"],
+    "modules-center": ["mpris", "custom/cava", "clock"],
     "modules-right": ["custom/pomodoro", "cpu", "memory", "pulseaudio", "bluetooth", "battery", "network", "idle_inhibitor", "tray", "custom/power"],
 
     // Números; el activo se estira a una píldora terracota (animación en style.css)
@@ -39,6 +39,14 @@
         "on-click-middle": "~/.local/bin/apple-music",
         "on-scroll-up": "playerctl -p playerctld previous",
         "on-scroll-down": "playerctl -p playerctld next"
+    },
+
+    // Ecualizador en vivo (cava); desaparece en silencio
+    "custom/cava": {
+        "exec": "~/.config/waybar/scripts/cava.sh",
+        "format": "{}",
+        "tooltip": false,
+        "on-click": "~/.local/bin/apple-music"
     },
 
     "clock": {

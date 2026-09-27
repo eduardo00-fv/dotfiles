@@ -1,0 +1,43 @@
+{
+  "appearance": {
+    "colorSource": "default",
+    "rounding": {
+      "verysmall": 6,
+      "small": 8,
+      "normal": 12,
+      "large": 14,
+      "screenRounding": 14,
+      "windowRounding": 8
+    },
+    "font": {
+      "family": {
+        "main": "CaskaydiaCove Nerd Font",
+        "title": "CaskaydiaCove Nerd Font",
+        "expressive": "Fraunces"
+      }
+    }
+  },
+  "overview": {
+    "rows": 1,
+    "columns": 5,
+    "scale": 0.17,
+    "hideEmptyRows": true,
+    "closeOnFocusLoss": true,
+    "previewsEnabled": true,
+    "previewMode": "live",
+    "showSpecialWorkspaces": true,
+    "specialWorkspaceColumns": 3,
+    "effects": {
+      "enableBackdrop": true,
+      "backdropOpacity": 0.45,
+      "panelOpacity": 0.97,
+      "workspaceOpacity": 0.95,
+      "enableBlur": true
+    },
+    "workspaceSpacing": 8,
+    "backgroundPadding": 12
+  },
+  "position": {
+    "topMargin": 90
+  }
+}

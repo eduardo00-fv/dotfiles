@@ -291,3 +291,43 @@ tooltip label {
   color: $texto2;
 }
 .estado.pendientes { color: $mostaza; }
+
+/* ---------- Calendario ---------- */
+.cal-card {
+  background-color: rgba(29, 26, 22, 0.92);
+  padding: 18px 20px 14px 20px;
+}
+.cal-dia    { font-size: 44px; color: $acento; font-weight: bold; }
+.cal-nombre { font-size: 15px; color: $texto; }
+.cal-mes    { font-size: 12px; color: $texto2; }
+.cal-semana { font-size: 10px; min-width: 60px; color: $musgo; margin-top: 4px; }
+.cal-linea  { min-height: 1px; background-color: rgba(94, 82, 69, 0.5); }
+
+calendar.cal {
+  background: transparent;
+  color: $texto;
+  font-size: 12px;
+  padding: 2px;
+}
+calendar.cal.header {
+  color: $texto2;
+  border: none;
+  background: transparent;
+}
+calendar.cal.button {
+  color: $nogal;
+  background: transparent;
+  border: none;
+}
+calendar.cal.button:hover { color: $acento; }
+calendar.cal.highlight {          /* nombres de los dias */
+  color: $musgo;
+  font-weight: bold;
+}
+calendar.cal:indeterminate { color: rgba(94, 82, 69, 0.8); }   /* dias de otro mes */
+calendar.cal:selected {
+  background-color: $acento;
+  color: $tinta;
+  border-radius: 8px;
+  font-weight: bold;
+}

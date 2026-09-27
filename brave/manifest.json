@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Tinta",
+  "version": "1.0",
+  "description": "Paleta Tinta: tinta, crema, terracota y musgo",
+  "theme": {
+    "colors": {
+      "frame":                        [24, 21, 17],
+      "frame_inactive":               [24, 21, 17],
+      "frame_incognito":              [20, 17, 14],
+      "frame_incognito_inactive":     [20, 17, 14],
+      "background_tab":               [24, 21, 17],
+      "background_tab_inactive":      [24, 21, 17],
+      "toolbar":                      [42, 36, 29],
+      "toolbar_text":                 [236, 220, 192],
+      "toolbar_button_icon":          [191, 174, 144],
+      "tab_text":                     [236, 220, 192],
+      "tab_background_text":          [138, 125, 107],
+      "tab_background_text_inactive": [94, 82, 69],
+      "bookmark_text":                [191, 174, 144],
+      "omnibox_background":           [29, 26, 22],
+      "omnibox_text":                 [236, 220, 192],
+      "button_background":            [224, 85, 31],
+      "ntp_background":               [29, 26, 22],
+      "ntp_text":                     [236, 220, 192],
+      "ntp_link":                     [147, 163, 90],
+      "ntp_header":                   [224, 85, 31]
+    },
+    "tints": {
+      "buttons": [0.08, 0.35, 0.72]
+    },
+    "properties": {
+      "ntp_background_alignment": "bottom"
+    }
+  }
+}

@@ -7,7 +7,7 @@ pkill -x eww 2>/dev/null
 sleep 0.5
 rm -f "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"/eww-server_*   # socket huérfano
 cd "$HOME" || exit 1
-setsid eww daemon --no-daemonize >/dev/null 2>&1 < /dev/null &
+LC_TIME=es_CR.UTF-8 setsid eww daemon --no-daemonize >/dev/null 2>&1 < /dev/null &
 for _ in $(seq 40); do       # el daemon tarda 5-18 s en abrir el socket
     eww ping >/dev/null 2>&1 && break
     sleep 1

@@ -1,0 +1,22 @@
+{
+  "name": "tinta-theme",
+  "displayName": "Tinta",
+  "description": "Paleta Tinta: tinta, crema, terracota y musgo",
+  "version": "1.0.0",
+  "publisher": "thrain",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Tinta",
+        "uiTheme": "vs-dark",
+        "path": "./themes/tinta-color-theme.json"
+      }
+    ]
+  }
+}

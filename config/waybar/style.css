@@ -82,12 +82,19 @@ window#waybar.empty #window { padding: 0; margin: 0; }
 /* ---------- Centro: música + reloj ---------- */
 #mpris {
     color: #bfae90;
-    padding: 0 12px 0 8px;
-    border-right: 1px solid rgba(94, 82, 69, 0.45);
+    padding: 0 8px 0 8px;
     transition: color 0.3s ease;
 }
 #mpris.playing { color: #ecdcc0; }
 #mpris:hover   { color: #e2cda8; }
+
+#custom-cava {
+    color: #e0551f;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 0 10px 0 4px;
+    border-right: 1px solid rgba(94, 82, 69, 0.45);
+}
 
 #clock {
     color: #93a35a;

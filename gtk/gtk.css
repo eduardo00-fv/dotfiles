@@ -1,0 +1,38 @@
+/* Paleta Tinta para GTK4/libadwaita (y GTK3 con adw-gtk3, mismo archivo) */
+@define-color accent_color          #e8744a;
+@define-color accent_bg_color       #e0551f;
+@define-color accent_fg_color       #1d1a16;
+
+@define-color window_bg_color       #1d1a16;
+@define-color window_fg_color       #ecdcc0;
+@define-color view_bg_color         #211d18;
+@define-color view_fg_color         #ecdcc0;
+
+@define-color headerbar_bg_color    #2a241d;
+@define-color headerbar_fg_color    #ecdcc0;
+@define-color headerbar_backdrop_color #1d1a16;
+@define-color headerbar_shade_color rgba(0, 0, 0, 0.36);
+
+@define-color sidebar_bg_color      #231f1a;
+@define-color sidebar_fg_color      #ecdcc0;
+@define-color sidebar_backdrop_color #1d1a16;
+@define-color secondary_sidebar_bg_color #1f1b17;
+@define-color secondary_sidebar_fg_color #ecdcc0;
+
+@define-color card_bg_color         rgba(236, 220, 192, 0.05);
+@define-color card_fg_color         #ecdcc0;
+@define-color dialog_bg_color       #2a241d;
+@define-color dialog_fg_color       #ecdcc0;
+@define-color popover_bg_color      #2a241d;
+@define-color popover_fg_color      #ecdcc0;
+@define-color thumbnail_bg_color    #2a241d;
+@define-color thumbnail_fg_color    #ecdcc0;
+
+@define-color success_color         #93a35a;
+@define-color success_bg_color      #6b7b3f;
+@define-color warning_color         #d9a441;
+@define-color warning_bg_color      #b08233;
+@define-color error_color           #d0604f;
+@define-color error_bg_color        #b83a2e;
+@define-color destructive_color     #d0604f;
+@define-color destructive_bg_color  #b83a2e;

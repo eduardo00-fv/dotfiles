@@ -1,0 +1,19 @@
+# cava en terminal — paleta Tinta: musgo abajo, terracota arriba
+[general]
+framerate = 60
+bar_width = 2
+bar_spacing = 1
+sleep_timer = 5
+
+[input]
+method = pipewire
+
+[color]
+gradient = 1
+gradient_color_1 = '#6b7b3f'
+gradient_color_2 = '#93a35a'
+gradient_color_3 = '#d9a441'
+gradient_color_4 = '#e0551f'
+
+[smoothing]
+noise_reduction = 77

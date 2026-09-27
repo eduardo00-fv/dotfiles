@@ -207,3 +207,26 @@
   :focusable false
   :geometry (geometry :x "28px" :y "20px" :width "440px" :anchor "top left")
   (columna))
+
+;; ---------- Calendario (clic en el reloj de la waybar) ----------
+(defpoll cal-hoy :interval "60s"
+  `LC_TIME=es_CR.UTF-8 date '+{"dia":"%-d","nombre":"%A","mes":"%B %Y","semana":"%V"}'`)
+
+(defwidget calendario-card []
+  (box :class "card cal-card" :orientation "v" :space-evenly false :spacing 10
+    (box :orientation "h" :space-evenly false :spacing 14
+      (label :class "cal-dia" :text {cal-hoy.dia})
+      (box :orientation "v" :space-evenly false :valign "center"
+        (label :class "cal-nombre" :halign "start" :text {cal-hoy.nombre})
+        (label :class "cal-mes" :halign "start" :text {cal-hoy.mes}))
+      (box :hexpand true)
+      (label :class "cal-semana" :valign "start" :text "SEM ${cal-hoy.semana}"))
+    (box :class "cal-linea")
+    (calendar :class "cal" :show-heading true :show-day-names true :show-details false)))
+
+(defwindow calendario
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :geometry (geometry :y "50px" :width "320px" :anchor "top center")
+  (calendario-card))

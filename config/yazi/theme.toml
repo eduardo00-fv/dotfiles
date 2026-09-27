@@ -1,0 +1,111 @@
+# yazi — paleta Tinta
+# terracota #e0551f · crema #ecdcc0 · arena #bfae90 · nogal #5e5245
+# ocre #d9a441 · musgo #93a35a · arcilla #b0695a · tinta #1d1a16
+
+[mgr]
+cwd = { fg = "#93a35a", bold = true }
+find_keyword  = { fg = "#d9a441", bold = true, underline = true }
+find_position = { fg = "#e0551f", bold = true }
+marker_copied   = { fg = "#93a35a", bg = "#93a35a" }
+marker_cut      = { fg = "#b83a2e", bg = "#b83a2e" }
+marker_marked   = { fg = "#6f8fa6", bg = "#6f8fa6" }
+marker_selected = { fg = "#e0551f", bg = "#e0551f" }
+count_copied   = { fg = "#1d1a16", bg = "#93a35a" }
+count_cut      = { fg = "#1d1a16", bg = "#b83a2e" }
+count_selected = { fg = "#1d1a16", bg = "#e0551f" }
+border_symbol = "│"
+border_style  = { fg = "#5e5245" }
+
+[tabs]
+active   = { fg = "#1d1a16", bg = "#e0551f", bold = true }
+inactive = { fg = "#bfae90", bg = "#2a241d" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+normal_main = { fg = "#1d1a16", bg = "#e0551f", bold = true }
+normal_alt  = { fg = "#e0551f", bg = "#2a241d" }
+select_main = { fg = "#1d1a16", bg = "#93a35a", bold = true }
+select_alt  = { fg = "#93a35a", bg = "#2a241d" }
+unset_main  = { fg = "#1d1a16", bg = "#d9a441", bold = true }
+unset_alt   = { fg = "#d9a441", bg = "#2a241d" }
+
+[indicator]
+parent  = { fg = "#1d1a16", bg = "#5e5245" }
+current = { fg = "#1d1a16", bg = "#e0551f", bold = true }
+preview = { underline = true }
+padding = { open = "", close = "" }
+
+[status]
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+perm_sep   = { fg = "#5e5245" }
+perm_type  = { fg = "#93a35a" }
+perm_read  = { fg = "#d9a441" }
+perm_write = { fg = "#e0551f" }
+perm_exec  = { fg = "#6f8fa6" }
+progress_label  = { fg = "#ecdcc0", bold = true }
+progress_normal = { fg = "#93a35a", bg = "#2a241d" }
+progress_error  = { fg = "#d9a441", bg = "#b83a2e" }
+
+[which]
+border    = { fg = "#5e5245" }
+cand      = { fg = "#e0551f", bold = true }
+rest      = { fg = "#5e5245" }
+desc      = { fg = "#bfae90" }
+separator = "  "
+separator_style = { fg = "#5e5245" }
+
+[confirm]
+border = { fg = "#e0551f" }
+title  = { fg = "#e0551f" }
+btn_yes = { fg = "#1d1a16", bg = "#e0551f" }
+btn_labels = [ "  [S]í  ", "  (N)o  " ]
+
+[spot]
+border = { fg = "#5e5245" }
+title  = { fg = "#93a35a" }
+tbl_col  = { fg = "#93a35a" }
+tbl_cell = { fg = "#1d1a16", bg = "#e0551f" }
+
+[notify]
+title_info  = { fg = "#93a35a" }
+title_warn  = { fg = "#d9a441" }
+title_error = { fg = "#b83a2e" }
+
+[pick]
+border = { fg = "#5e5245" }
+active = { fg = "#e0551f", bold = true }
+
+[input]
+border   = { fg = "#e0551f" }
+title    = { fg = "#ecdcc0" }
+selected = { fg = "#1d1a16", bg = "#e0551f" }
+
+[cmp]
+border = { fg = "#5e5245" }
+active = { fg = "#1d1a16", bg = "#e0551f" }
+
+[tasks]
+border  = { fg = "#5e5245" }
+title   = { fg = "#93a35a" }
+hovered = { fg = "#e0551f", bold = true }
+
+[help]
+border  = { fg = "#5e5245" }
+chord   = { fg = "#e0551f" }
+desc    = { fg = "#bfae90" }
+hovered = { fg = "#1d1a16", bg = "#93a35a", bold = true }
+
+[filetype]
+rules = [
+	{ mime = "**/image/*", fg = "#d9a441" },
+	{ mime = "**/{audio,video}/*", fg = "#b0695a" },
+	{ mime = "**/application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#e0551f" },
+	{ mime = "**/application/{pdf,doc,rtf}", fg = "#6f8fa6" },
+	{ mime = "vfs/{absent,stale}", fg = "#5e5245" },
+	{ url = "*", is = "orphan", fg = "#b83a2e" },
+	{ url = "*", is = "exec", fg = "#93a35a" },
+	{ url = "*/", fg = "#e2cda8", bold = true },
+	{ url = "*", fg = "#bfae90" },
+]
