@@ -1,0 +1,10 @@
+[SddmGreeterTheme]
+Name=Tinta
+Description=Paleta Tinta: marco editorial, reloj delgado y frases de Thrain
+Author=thrain
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+Screenshot=fondo.jpg
+QtVersion=6

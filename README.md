@@ -38,6 +38,7 @@ Fotos 4K de fondo que rotan solas y una columna de widgets en el escritorio.
 | **Fuente** | CaskaydiaCove Nerd Font en todo |
 | **Fondo** | dos modos: fotos 4K o degradados con grano generados en la paleta (`fondos/generar-degradados.py`); swaybg con `wallpaper-daemon.py` rota cada 30 min, pausa en pantalla completa y reaplica al conectar monitores. Super+W cambia |
 | **Lock / idle** | hyprlock + hypridle: fondo actual desenfocado, marco editorial, reloj delgado y una frase para hacer *lock in* en Fraunces suave (`hypr/frases-thrain.txt`) |
+| **Login** | SDDM con tema propio (`sddm/tinta`): mismo marco, reloj y frases de Thrain que el lock, usuario, sesión y apagado |
 | **Terminal** | kitty + starship + atuin (tema `tinta`) + fastfetch "la forja": un casco enano renderizado en 3D (raymarching con numpy → medio-bloques) da una vuelta y THRAIN se forja al rojo vivo (`fastfetch/forja.py`) |
 | **Archivos** | yazi con tema Tinta (Super+E); Nautilus en Super+Shift+E |
 | **Apps** | GTK: adw-gtk3-dark + colores Tinta (`gtk/gtk.css`), íconos Papirus (carpetas palebrown), cursor Bibata Modern Amber; tema Tinta propio para VS Code (`vscode/`) y Brave (`brave/`) |
@@ -70,6 +71,7 @@ Pasos a mano:
 - **zsh:** agregar `source ~/dotfiles/zsh/tinta.zsh` al final de `~/.zshrc` (fastfetch animado y la función `y` de yazi).
 - **Brave:** `brave://extensions` → Modo de desarrollador → Cargar descomprimida → carpeta `brave/` del repo (no borrarla después).
 - **Calendario en español:** descomentar `es_CR.UTF-8` en `/etc/locale.gen` y correr `locale-gen`.
+- **Login (SDDM):** `sudo cp -r sddm/tinta /usr/share/sddm/themes/ && sudo cp sddm/tinta.conf /etc/sddm.conf.d/ && sudo systemctl enable -f sddm` (copiar Fraunces a `/usr/local/share/fonts`; el login no lee el home).
 - **Carpetas:** `papirus-folders -C palebrown --theme Papirus-Dark`.
 
 Las fotos de fondo van en `~/Pictures/Walpapers/fotos/` (no están en el repo). Los degradados se generan con
