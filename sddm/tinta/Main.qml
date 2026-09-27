@@ -37,7 +37,7 @@ Rectangle {
         fillMode: Image.PreserveAspectCrop
         asynchronous: false
     }
-    Rectangle { anchors.fill: parent; color: "#1d1a16"; opacity: 0.25 }
+    Rectangle { anchors.fill: parent; color: "#1d1a16"; opacity: 0.12 }
 
     // ------------------------------------------------------------ marco
     Rectangle {
@@ -60,10 +60,11 @@ Rectangle {
     Esquina { text: "INICIAR SESIÓN"; color: "#a0bfae90"; anchors.right: parent.right; anchors.rightMargin: 72 * s; y: 64 * s - height / 2 }
     Esquina { text: "ARCH LINUX"; color: "#78bfae90"; x: 72 * s; y: parent.height - 64 * s - height / 2 }
 
-    // sesión (abajo a la derecha): clic para cambiar
+    // sesión (abajo a la derecha): clic para abrir el menú
+    property bool menuSesion: false
     Esquina {
         id: textoSesion
-        text: "SESIÓN  " + nombreDe(sesiones, root.sesion, sesiones.count).toUpperCase() + "  ▾"
+        text: "SESIÓN  " + nombreDe(sesiones, root.sesion, sesiones.count).toUpperCase() + (root.menuSesion ? "  ▴" : "  ▾")
         color: areaSesion.containsMouse ? root.terracota : "#aabfae90"
         anchors.right: parent.right; anchors.rightMargin: 72 * s
         y: parent.height - 64 * s - height / 2
@@ -73,7 +74,7 @@ Rectangle {
             anchors.fill: parent; anchors.margins: -8
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
-            onClicked: root.sesion = (root.sesion + 1) % Math.max(1, sesiones.count)
+            onClicked: root.menuSesion = !root.menuSesion
         }
     }
 
@@ -204,7 +205,7 @@ Rectangle {
                     if (text.length === 0) return
                     sddm.login(nombreDe(usuarios, root.usuario, usuarios.count), text, root.sesion)
                 }
-                Keys.onEscapePressed: text = ""
+                Keys.onEscapePressed: { if (root.menuSesion) root.menuSesion = false; else text = "" }
             }
             Text {
                 anchors.centerIn: parent
@@ -232,6 +233,64 @@ Rectangle {
             font.family: root.mono
             font.pixelSize: 12 * s
             Behavior on opacity { NumberAnimation { duration: 200 } }
+        }
+    }
+
+    // ------------------------------------------------------------ menú de sesiones
+    MouseArea {                                   // clic fuera: cerrar
+        anchors.fill: parent
+        visible: root.menuSesion
+        onClicked: root.menuSesion = false
+    }
+    Rectangle {
+        id: menu
+        anchors.right: parent.right; anchors.rightMargin: 56 * s
+        y: textoSesion.y - height - 18 * s
+        width: 260 * s
+        height: lista.implicitHeight + 16 * s
+        radius: 12 * s
+        color: "#ee1d1a16"
+        border.width: 1; border.color: "#665e5245"
+        opacity: root.menuSesion ? 1 : 0
+        visible: opacity > 0
+        transform: Translate { y: root.menuSesion ? 0 : 8 * root.s; Behavior on y { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } } }
+        Behavior on opacity { NumberAnimation { duration: 180 } }
+
+        Column {
+            id: lista
+            anchors.centerIn: parent
+            width: parent.width - 16 * s
+            Repeater {
+                model: sessionModel
+                delegate: Rectangle {
+                    width: lista.width; height: 36 * root.s
+                    radius: 8 * root.s
+                    color: zona.containsMouse ? "#2ae0551f" : "transparent"
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        x: 14 * root.s
+                        text: model.name.toUpperCase()
+                        color: index === root.sesion ? root.terracota : (zona.containsMouse ? root.crema : root.arena)
+                        font.family: root.mono
+                        font.pixelSize: 13 * root.s
+                        font.letterSpacing: 3 * root.s
+                    }
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right; anchors.rightMargin: 14 * root.s
+                        visible: index === root.sesion
+                        text: "●"; color: root.terracota
+                        font.pixelSize: 8 * root.s
+                    }
+                    MouseArea {
+                        id: zona
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: { root.sesion = index; root.menuSesion = false; clave.forceActiveFocus() }
+                    }
+                }
+            }
         }
     }
 
